@@ -1,0 +1,21 @@
+.header {
+  background: linear-gradient(97.61deg, #06377b 27.75%, #124b9b 99.06%);
+  color: #fff;
+
+  &-content {
+    margin: 1em auto;
+
+    p {
+      margin-bottom: 0;
+      font-size: 24px;
+    }
+  }
+}
+
+.card {
+  background: #ffffff;
+}
+
+.grantInformation {
+  margin: 50;
+}
