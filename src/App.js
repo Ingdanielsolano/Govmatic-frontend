@@ -1,10 +1,11 @@
 import React from 'react';
 import './sass/main.scss';
-import { GrantList } from './scenes/list/index';
+import Router from './scenes/router';
 
 function App() {
+
   return (
-    <GrantList />
+    <Router/>
   );
 }
 

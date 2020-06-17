@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Table, Space } from 'antd';
 import './index.scss'
+// import { DetailGrant } from '../list/detail';
+import { useSelector, useDispatch } from 'react-redux';
+import grantListAction from '../../services/grantList/actions'
 
-const list = {
-    columns: [
+
+
+export function GrantList({ history }) {
+
+    const columns = [
         {
             title: 'Opportunity Number',
             dataIndex: 'number',
             key: 'number',
             render: (text, record) => (
                 <Space size="middle">
-                    <a>H123493R93IR93I4</a>
-                </Space>
+                    <button className='button' onClick={() => goToDetail(record)}>{text}</button>
+                </Space >
             ),
         },
         {
@@ -23,49 +29,39 @@ const list = {
             title: 'Agencia',
             dataIndex: 'agency',
             key: 'agency',
+            render: (text, record) => (
+                record.agency.name
+            )
         },
         {
             title: 'Opportunity Status',
             dataIndex: 'status',
-            key: 'status',
-        },
-        {
-            title: 'Opportunity Status',
-            dataIndex: 'status',
-            key: 'status',
+            key: 'status'
         },
         {
             title: 'Posted Date',
             dataIndex: 'posted',
             key: 'posted',
-        },
-        {
-            title: 'Close Date',
-            dataIndex: 'close',
-            key: 'close',
-        },
-    ],
-    data: [
-        {
-            number: '',
-            title: '',
-            agency: '',
-            status: '',
-            postDate: '',
-            closeDate: ''
-        },
-        {
-            number: '',
-            title: '',
-            agency: '',
-            status: '',
-            postDate: '',
-            closeDate: ''
+            render: (text, record) => (
+                record.opportunities[0].postingDate
+            )
         }
     ]
-}
 
-export function GrantList() {
+    const goToDetail = (record) => {
+        console.log(record)
+        history.push('detail')
+    }
+    const dispatch = useDispatch()
+
+    const { items } = useSelector(state => state.grantList)
+
+    useEffect(() => {
+        dispatch(grantListAction.getGrantList())
+    }, [])
+
+    console.log({ items })
+
     return (
         <div className="opportunity">
             <Row justify="center" className="header">
@@ -74,7 +70,7 @@ export function GrantList() {
                 </div>
             </Row>
             <div className="opportunity-table">
-                <Table pagination={{ defaultPageSize: 25 }} dataSource={list.data} columns={list.columns} />
+                <Table pagination={{ defaultPageSize: 25 }} dataSource={items} columns={columns} rowKey="number" />
             </div>
         </div>
     )
